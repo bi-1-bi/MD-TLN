@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/assets/md-tln-framework.png" alt="MD-TLN framework" width="100%">
+  <img src="fig/md-tln-framework.png" alt="MD-TLN framework" width="100%">
 </p>
 
 This repository contains a cleaned implementation of the MD-TLN method for
@@ -39,11 +39,66 @@ heat-map plotting, residual plotting, and result-comparison scripts.
 ### Multi-Scale Patch-Wise Transformer
 
 <p align="center">
-  <img src="docs/assets/multi-scale-patch-transformer.png" alt="Multi-scale patch-wise Transformer" width="100%">
+  <img src="fig/multi-scale-patch-transformer.png" alt="Multi-scale patch-wise Transformer" width="100%">
 </p>
 
-## Installation
+## Get Started
+
+### 1. Clone The Repository
+
+```bash
+git clone https://github.com/bi-1-bi/MD-TLN.git
+cd MD-TLN
+```
+
+### 2. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
+
+### 3. Verify Installation
+
+```bash
+python scripts/smoke_test.py
+```
+
+If the script finishes without errors, the environment and model pipeline are
+ready.
+
+### 4. Run With Cleaned TXT Data
+
+```bash
+python scripts/run_txt_experiment.py --data-files path/to/cleaned.txt
+```
+
+The script reads cleaned AFC TXT files, builds station-grid tensors, trains the
+model, and writes outputs under the `runs/` directory.
+
+## Data Preparation
+
+This repository does not include raw AFC data or processed tensors. Users should
+prepare cleaned TXT AFC files locally and pass them to the experiment script
+through `--data-files`.
+
+For multiple files:
+
+```bash
+python scripts/run_txt_experiment.py --data-files file_1.txt file_2.txt file_3.txt
+```
+
+Generated outputs are ignored by Git and should not be committed to the
+repository.
+
+## Outputs
+
+Running the experiment script creates a result file under `runs/`. The file
+records metadata, training history, and evaluation metrics for the current run.
+
+The `runs/` directory is excluded from version control to keep the repository
+lightweight.
+
+## License
+
+This project is released under the MIT License. See [LICENSE](LICENSE) for
+details.
