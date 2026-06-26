@@ -1,0 +1,11 @@
+MD-TLN open source code
+
+This cleaned implementation was organized from the author's research code for
+the MD-TLN manuscript.
+
+Some architectural utilities are adapted from the MIT-licensed MSP-STTN project:
+
+  Copyright (c) 2021 xieyulai
+
+The original MIT license text is retained in LICENSE.
+
