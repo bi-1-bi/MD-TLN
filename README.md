@@ -47,11 +47,3 @@ heat-map plotting, residual plotting, and result-comparison scripts.
 ```bash
 pip install -r requirements.txt
 ```
-
-## Notes For Release
-
-- Keep data files, trained weights, generated figures, and virtual environments
-  out of the repository.
-- Add a dataset README if public data or processed tensors are released later.
-- The implementation keeps the model code separated from experiment analysis so
-  reviewers can inspect the proposed method directly.
