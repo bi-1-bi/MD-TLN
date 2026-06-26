@@ -1,7 +1,7 @@
 # MD-TLN
 
 <p align="center">
-  <strong>A clean PyTorch implementation of MD-TLN for metro passenger flow prediction.</strong>
+  <strong>A PyTorch implementation of MD-TLN for metro passenger flow prediction.</strong>
 </p>
 
 <p align="center">
