@@ -14,13 +14,9 @@
   <img src="fig/md-tln-framework.png" alt="MD-TLN framework" width="100%">
 </p>
 
-This repository contains a cleaned implementation of the MD-TLN method for
+This repository contains an implementation of the MD-TLN method for
 metro passenger flow prediction. It is organized from the original project code
 and aligned with the Method section of the manuscript.
-
-The repository intentionally excludes experiment-only analysis code, including
-station functional labeling, POI clustering, spatiotemporal correlation figures,
-heat-map plotting, residual plotting, and result-comparison scripts.
 
 ## Highlights
 
@@ -34,20 +30,12 @@ heat-map plotting, residual plotting, and result-comparison scripts.
 - Decoder with optional auxiliary supervision.
 - Training and validation utilities for model development.
 
-## Architecture
-
-### Multi-Scale Patch-Wise Transformer
-
-<p align="center">
-  <img src="fig/multi-scale-patch-transformer.png" alt="Multi-scale patch-wise Transformer" width="100%">
-</p>
-
 ## Get Started
 
 ### 1. Clone The Repository
 
 ```bash
-git clone https://github.com/bi-1-bi/MD-TLN.git
+git clone https://github.com/Lilin-Chen/MD-TLN.git
 cd MD-TLN
 ```
 
@@ -60,26 +48,26 @@ pip install -r requirements.txt
 ### 3. Verify Installation
 
 ```bash
-python scripts/smoke_test.py
+python scripts/verify_installation.py
 ```
 
 If the script finishes without errors, the environment and model pipeline are
 ready.
 
-### 4. Run With Cleaned TXT Data
+### 4. Run With Data
 
 ```bash
-python scripts/run_txt_experiment.py --data-files path/to/cleaned.txt
+python scripts/run_txt_experiment.py --data-files path/to/data.txt
 ```
 
-The script reads cleaned AFC TXT files, builds station-grid tensors, trains the
-model, and writes outputs under the `runs/` directory.
+The script reads prepared AFC data files, builds station-grid tensors, trains
+the model, and writes outputs under the `runs/` directory.
 
 ## Data Preparation
 
 This repository does not include raw AFC data or processed tensors. Users should
-prepare cleaned TXT AFC files locally and pass them to the experiment script
-through `--data-files`.
+prepare data files locally and pass them to the experiment script through
+`--data-files`.
 
 For multiple files:
 
