@@ -1,4 +1,18 @@
-# MD-TLN Open Source Code
+# MD-TLN
+
+<p align="center">
+  <strong>A clean PyTorch implementation of MD-TLN for metro passenger flow prediction.</strong>
+</p>
+
+<p align="center">
+  <img alt="Python" src="https://img.shields.io/badge/Python-3.10%2B-blue">
+  <img alt="PyTorch" src="https://img.shields.io/badge/PyTorch-1.13%2B-ee4c2c">
+  <img alt="License" src="https://img.shields.io/badge/License-MIT-green">
+</p>
+
+<p align="center">
+  <img src="docs/assets/md-tln-framework.png" alt="MD-TLN framework" width="100%">
+</p>
 
 This repository contains a cleaned implementation of the MD-TLN method for
 metro passenger flow prediction. It is organized from the original project code
@@ -8,23 +22,28 @@ The repository intentionally excludes experiment-only analysis code, including
 station functional labeling, POI clustering, spatiotemporal correlation figures,
 heat-map plotting, residual plotting, and result-comparison scripts.
 
-## Method Scope
-
-Included components:
+## Highlights
 
 - Multi-source input handling for historical flow, spatial topology, and
   external disturbance features.
 - Weather, holiday, and large-scale event feature encoding.
 - Entropy-weighted spatial relationship construction.
-- Parallel convolutional encoders.
-- Spatio-conditional feature fusion.
+- Parallel convolutional encoders with spatio-conditional feature fusion.
 - Squeeze-and-Channel Excitation attention.
 - Multi-scale patch-wise Transformer.
 - Decoder with optional auxiliary supervision.
 - Training loop with Adam, MSE-based objective, validation monitoring, and
   early stopping.
 
-Paper-aligned defaults:
+## Architecture
+
+### Multi-Scale Patch-Wise Transformer
+
+<p align="center">
+  <img src="docs/assets/multi-scale-patch-transformer.png" alt="Multi-scale patch-wise Transformer" width="100%">
+</p>
+
+## Paper-Aligned Defaults
 
 - Historical input length: 6 steps.
 - Time interval: 5 minutes.
@@ -35,10 +54,20 @@ Paper-aligned defaults:
 - Training epochs: 100.
 - Primary loss: MSE.
 
+## Installation
+
+```bash
+pip install -r requirements.txt
+```
+
 ## Project Structure
 
 ```text
 md_tln_open_source/
+  docs/
+    assets/
+      md-tln-framework.png
+      multi-scale-patch-transformer.png
   md_tln/
     config.py              # Shared dataclass configuration
     data.py                # Sliding windows and tensor datasets
@@ -102,6 +131,13 @@ Run cleaned TXT data:
 ```bash
 python scripts/run_txt_experiment.py --data-files path/to/cleaned.txt --sample-rows 100000
 ```
+
+## Experiment Notes
+
+Lightweight local verification results are recorded in
+[`EXPERIMENT_RESULTS.md`](EXPERIMENT_RESULTS.md). These runs are sanity/full-data
+execution checks with CPU-friendly settings, not a full 100-epoch GPU
+reproduction of the manuscript experiments.
 
 ## Notes For Release
 
