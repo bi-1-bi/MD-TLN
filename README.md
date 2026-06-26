@@ -14,9 +14,8 @@
   <img src="fig/md-tln-framework.png" alt="MD-TLN framework" width="100%">
 </p>
 
-This repository contains an implementation of the MD-TLN method for
-metro passenger flow prediction. It is organized from the original project code
-and aligned with the Method section of the manuscript.
+MD-TLN is a PyTorch-based model for metro passenger flow prediction with
+multi-source feature fusion and multi-scale patch-wise Transformer modeling.
 
 ## Highlights
 
@@ -30,22 +29,25 @@ and aligned with the Method section of the manuscript.
 - Decoder with optional auxiliary supervision.
 - Training and validation utilities for model development.
 
-## Get Started
+## Quick Start
 
-### 1. Clone The Repository
+### Environment
+
+- Python 3.10+
+- PyTorch 1.13+
+- NumPy 1.23+
+- Pandas 1.5+
+- scikit-learn 1.1+
+
+### Installation
 
 ```bash
 git clone https://github.com/Lilin-Chen/MD-TLN.git
 cd MD-TLN
-```
-
-### 2. Install Dependencies
-
-```bash
 pip install -r requirements.txt
 ```
 
-### 3. Verify Installation
+### Verify Installation
 
 ```bash
 python scripts/verify_installation.py
@@ -54,37 +56,20 @@ python scripts/verify_installation.py
 If the script finishes without errors, the environment and model pipeline are
 ready.
 
-### 4. Run With Data
+### Run With Data
 
 ```bash
 python scripts/run_txt_experiment.py --data-files path/to/data.txt
 ```
 
-The script reads prepared AFC data files, builds station-grid tensors, trains
-the model, and writes outputs under the `runs/` directory.
-
-## Data Preparation
-
-This repository does not include raw AFC data or processed tensors. Users should
-prepare data files locally and pass them to the experiment script through
-`--data-files`.
+The script reads prepared AFC data files, builds station-grid tensors, and runs
+the training pipeline.
 
 For multiple files:
 
 ```bash
 python scripts/run_txt_experiment.py --data-files file_1.txt file_2.txt file_3.txt
 ```
-
-Generated outputs are ignored by Git and should not be committed to the
-repository.
-
-## Outputs
-
-Running the experiment script creates a result file under `runs/`. The file
-records metadata, training history, and evaluation metrics for the current run.
-
-The `runs/` directory is excluded from version control to keep the repository
-lightweight.
 
 ## License
 
