@@ -14,6 +14,10 @@
   <img src="fig/md-tln-framework.png" alt="MD-TLN framework" width="100%">
 </p>
 
+<p align="center">
+  <em>Fig 1. The overall framework of the proposed MD-TLN model for metro passenger flow prediction.</em>
+</p>
+
 MD-TLN is a PyTorch-based model for metro passenger flow prediction with
 multi-source feature fusion and multi-scale patch-wise Transformer modeling.
 
