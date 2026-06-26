@@ -1,81 +1,112 @@
-# MD-TLN
+# MD-TLN Open Source Code
 
-<p align="center">
-  <strong>This is a PyTorch implementation of MD-TLN for metro passenger flow prediction.</strong>
-</p>
+This repository contains a cleaned implementation of the MD-TLN method for
+metro passenger flow prediction. It is organized from the original project code
+and aligned with the Method section of the manuscript.
 
-<p align="center">
-  <img alt="Python" src="https://img.shields.io/badge/Python-3.10%2B-blue">
-  <img alt="PyTorch" src="https://img.shields.io/badge/PyTorch-1.13%2B-ee4c2c">
-  <img alt="License" src="https://img.shields.io/badge/License-MIT-green">
-</p>
+The repository intentionally excludes experiment-only analysis code, including
+station functional labeling, POI clustering, spatiotemporal correlation figures,
+heat-map plotting, residual plotting, and result-comparison scripts.
 
-<p align="center">
-  <img src="fig/md-tln-framework.png" alt="MD-TLN framework" width="100%">
-</p>
+## Method Scope
 
-<p align="center">
-  <em>Fig 1. The overall framework of the proposed MD-TLN model for metro passenger flow prediction.</em>
-</p>
-
-MD-TLN is a PyTorch-based model for metro passenger flow prediction with
-multi-source feature fusion and multi-scale patch-wise Transformer modeling.
-
-## Highlights
+Included components:
 
 - Multi-source input handling for historical flow, spatial topology, and
   external disturbance features.
 - Weather, holiday, and large-scale event feature encoding.
 - Entropy-weighted spatial relationship construction.
-- Parallel convolutional encoders with spatio-conditional feature fusion.
+- Parallel convolutional encoders.
+- Spatio-conditional feature fusion.
 - Squeeze-and-Channel Excitation attention.
 - Multi-scale patch-wise Transformer.
 - Decoder with optional auxiliary supervision.
-- Training and validation utilities for model development.
+- Training loop with Adam, MSE-based objective, validation monitoring, and
+  early stopping.
+
+Paper-aligned defaults:
+
+- Historical input length: 6 steps.
+- Time interval: 5 minutes.
+- Forecast horizon: 1 step.
+- Optimizer: Adam.
+- Initial learning rate: 1e-4.
+- Batch size: 32.
+- Training epochs: 100.
+- Primary loss: MSE.
+
+## Project Structure
+
+```text
+md_tln_open_source/
+  md_tln/
+    config.py              # Shared dataclass configuration
+    data.py                # Sliding windows and tensor datasets
+    losses.py              # Primary and auxiliary losses
+    model.py               # MD-TLN architecture
+    patching.py            # Patchify and unpatchify utilities
+    positional_encoding.py # Sinusoidal temporal/spatial encoding
+    spatial_weights.py     # Entropy-weighted spatial input encoding
+    train.py               # Training and validation loops
+    weather_events.py      # Weather, holiday, and large-scale event features
+  scripts/
+    smoke_test.py          # Minimal import/forward/backward check
+    run_txt_experiment.py  # Small/full runs on cleaned TXT AFC data
+  requirements.txt
+  NOTICE
+  LICENSE
+```
+
+## Input Shapes
+
+The model expects tensors in the following format:
+
+```text
+history:  [batch, input_length, history_channels, height, width]
+spatial:  [batch, input_length, spatial_channels, height, width] or None
+external: [batch, input_length, external_channels, height, width] or None
+target:   [batch, forecast_horizon, output_channels, height, width]
+```
+
+If `spatial` or `external` is omitted, the model substitutes zero context for
+that branch. This is useful for ablation studies while keeping the same model
+interface.
 
 ## Quick Start
 
-### Environment
+```python
+from md_tln import MDTLN, ModelConfig
 
-- Python 3.10+
-- PyTorch 1.13+
-- NumPy 1.23+
-- Pandas 1.5+
-- scikit-learn 1.1+
+config = ModelConfig(
+    input_length=6,
+    forecast_horizon=1,
+    history_channels=2,
+    spatial_channels=1,
+    external_channels=8,
+    output_channels=2,
+    grid_height=32,
+    grid_width=32,
+)
 
-### Installation
-
-```bash
-git clone https://github.com/Lilin-Chen/MD-TLN.git
-cd MD-TLN
-pip install -r requirements.txt
+model = MDTLN(config)
 ```
 
-### Verify Installation
+Run a basic smoke test:
 
 ```bash
-python scripts/verify_installation.py
+python scripts/smoke_test.py
 ```
 
-If the script finishes without errors, the environment and model pipeline are
-ready.
-
-### Run With Data
+Run cleaned TXT data:
 
 ```bash
-python scripts/run_txt_experiment.py --data-files path/to/data.txt
+python scripts/run_txt_experiment.py --data-files path/to/cleaned.txt --sample-rows 100000
 ```
 
-The script reads prepared AFC data files, builds station-grid tensors, and runs
-the training pipeline.
+## Notes For Release
 
-For multiple files:
-
-```bash
-python scripts/run_txt_experiment.py --data-files file_1.txt file_2.txt file_3.txt
-```
-
-## License
-
-This project is released under the MIT License. See [LICENSE](LICENSE) for
-details.
+- Keep data files, trained weights, generated figures, and virtual environments
+  out of the repository.
+- Add a dataset README if public data or processed tensors are released later.
+- The implementation keeps the model code separated from experiment analysis so
+  reviewers can inspect the proposed method directly.
